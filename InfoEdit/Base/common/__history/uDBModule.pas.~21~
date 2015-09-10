@@ -1,0 +1,131 @@
+unit uDBModule;
+
+interface
+
+uses
+  SysUtils, Classes, DB, ADODB, DBAccess, Ora, IniFiles, Dialogs, uConfig;
+
+const
+  DBCONFIG_FILENAME = 'config\DBConn.ini';
+type
+  TDBConn = class(TDataModule)
+    DBConnect: TADOConnection;
+    FListQuery: TADOQuery;
+    FViewQuery: TADOQuery;
+    FDSView: TADODataSet;
+  private
+    configFile: TDBConfig;
+
+  public
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
+
+    function ConnDataBase(configFile: TDBConfig; var FConnect: TADOConnection): Boolean; overload; // 重载函数，连接数据库
+    function ConnDataBase(strCon: string; var FConnect: TADOConnection): Boolean; overload;
+
+    function GetRecord(var FQuery: TADOQuery; const Sqltxt: string): Boolean;
+
+    { Public declarations }
+  end;
+
+var
+  DBConn: TDBConn;
+
+implementation
+
+
+{$R *.dfm}
+
+{ TDBConn }
+
+constructor TDBConn.Create(AOwner: TComponent);
+begin
+  inherited;
+
+  configFile := TDBConfig.Create(DBCONFIG_FILENAME);
+  ConnDataBase(configFile, DBConnect);
+end;
+
+destructor TDBConn.Destroy;
+begin
+  FreeAndNil(configFile);
+  inherited;
+end;
+
+
+function TDBConn.ConnDataBase(configFile: TDBConfig; var FConnect: TADOConnection): Boolean;
+var
+  StrConnnTmp: string;
+begin
+  Result := False;
+
+  StrConnnTmp := configFile.StrConn;
+
+  if Trim(StrConnnTmp) = '' then Exit;
+
+  StrConnnTmp := Format(StrConnnTmp, [ExtractFilePath(ParamStr(0))+configFile.DBName]);
+
+  try
+    FConnect.Connected := False;
+    FConnect.KeepConnection := True;
+    FConnect.LoginPrompt := False;
+
+    FConnect.ConnectionString := StrConnnTmp;
+
+    FConnect.Connected := True;
+
+    FListQuery.Connection := FConnect;
+    FViewQuery.Connection := FConnect;
+    Result := True;
+  except
+    on e: Exception do
+    begin
+      ShowMessage('数据库连接错误：' + e.Message);
+    end;
+  end;
+
+end;
+
+function TDBConn.ConnDataBase(strCon: string; var FConnect: TADOConnection): Boolean;
+begin
+  Result := False;
+
+  if Trim(strCon) = '' then Exit;
+  try
+    FConnect.Connected := False;
+    FConnect.KeepConnection := True;
+    FConnect.LoginPrompt := False;
+
+    FConnect.ConnectionString := strCon;
+
+    FConnect.Connected := True;
+
+    FListQuery.Connection := FConnect;
+    FViewQuery.Connection := FConnect;
+    Result := True;
+  except
+    on e: Exception do
+    begin
+      ShowMessage('数据库连接错误：' + e.Message);
+    end;
+  end;
+
+end;
+
+
+function TDBConn.GetRecord(var FQuery: TADOQuery; const Sqltxt: string): Boolean; // 获取数据库中的数据
+begin
+  Result := false;
+  with FQuery do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add(Sqltxt);
+    Open;
+  end;
+  if FQuery.RecordCount > 0 then
+    Result := true;
+end;
+
+end.
+

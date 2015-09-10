@@ -1,0 +1,69 @@
+{========================================================
+   读取配置的单元, 封装配置文件类
+   @ zhiguo.wu
+   2014-06-12 21:00
+========================================================}
+
+unit uConfig;
+
+interface
+uses Classes, Windows, SysUtils, AES, IniFiles, Dialogs;
+
+type
+  TDBConfig = class(TObject)
+    FConfigName: string;
+    FStrConn: string;
+    FUserName: string;
+    FPassWord: string;
+    FDBName: string;
+    FServerIP: string;
+
+   private
+
+   public
+        constructor Create(aFileName: string); virtual;
+    destructor Destroy; override;
+
+
+    property ConfigName: string read FConfigName write FConfigName;
+    property StrConn: string read FStrConn write FStrConn;
+    property UserName: string read FUserName write FUserName;
+    property PassWord: string read FPassWord write FPassWord;
+    property DBName: string read FDBName write FDBName;
+    property ServerIP: string read FServerIP write FServerIP;
+  end;
+ 
+
+implementation
+
+{ TDBConfig }
+
+constructor TDBConfig.Create(aFileName: string);
+var
+  inifile: TIniFile;
+begin
+  if Trim(aFileName) = '' then Exit;
+
+  if not FileExists(ExtractFilePath(ParamStr(0)) + aFileName) then
+  begin
+    ShowMessage('配置文件 : ' + ExtractFilePath(ParamStr(0)) + aFileName + '不存在');
+  end;
+  try
+
+
+
+
+  finally
+
+  end;
+
+
+end;
+
+destructor TDBConfig.Destroy;
+begin
+
+  inherited;
+end;
+
+end.

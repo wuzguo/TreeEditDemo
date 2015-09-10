@@ -1,0 +1,52 @@
+{========================================================
+   数据库操作单元，封装数据库操作类
+   @ zhiguo.wu
+   2014-06-12 21:00
+========================================================}
+
+unit uDataModule;
+
+interface
+
+uses
+  SysUtils, Classes, DB, ADODB, IniFiles;
+
+type
+  TDBConn = class(TDataModule)
+    ADOConn: TADOConnection;
+    FListQuery: TADOQuery;
+    FViewQuery: TADOQuery;
+    procedure DBConnCreate(Sender: TObject);
+  private
+    function ConnectDatabase(iniFileName: stirng; var FQuery:TADOQuery): Boolean;
+    function ConnectDatabase(StrCon: stirng;  var FQuery:TADOQuery): Boolean; overload;
+  public
+    { Public declarations }
+  end;
+  
+var
+  DBConn: TDBConn;
+
+implementation
+
+uses
+  uConfig;
+
+{$R *.dfm}
+procedure TDBConn.DBConnCreate(Sender: TObject);
+begin
+
+end;
+
+function TDBConn.ConnectDatabase(iniFileName: stirng; var FQuery:TADOQuery): Boolean;
+begin
+
+end;
+
+function TDBConn.ConnectDatabase(StrCon: stirng;  var FQuery:TADOQuery): Boolean; overload;
+begin
+
+end;
+
+end.
+

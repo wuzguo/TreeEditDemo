@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2014-06-13 09:29:20.765.pas,F:\文档\Neusoft\Base\common\uDataModule.pas=</Transaction>
+    <Transaction>2014-06-13 09:29:20.765.dfm,F:\文档\Neusoft\Base\common\uDataModule.dfm=</Transaction>
+    <Transaction>2014-06-13 09:31:11.187.pas,F:\文档\Neusoft\Base\common\uDataModule.pas=F:\文档\Neusoft\Base\common\uDBModule.pas</Transaction>
+    <Transaction>2014-06-13 09:31:11.187.dfm,F:\文档\Neusoft\Base\common\uDataModule.dfm=F:\文档\Neusoft\Base\common\uDBModule.dfm</Transaction>
+  </Transactions>
+</BorlandProject>

@@ -1,0 +1,67 @@
+{========================================================
+   ListVew ²Ù×÷µ¥Ôª
+   @ zhiguo.wu
+   2014-06-12 21:00
+========================================================}
+
+unit uList;
+  
+
+interface
+
+implementation
+
+
+procedure TForm1.FillTreeView_File(TreeView: TTreeView; TargetNode:TTreeNode);
+var
+  TreeNode1: TTreeNode;
+
+  procedure CreateSubTree(FNodeName: string; Node: TTreeNode);
+  var
+    TreeNode: TTreeNode;
+  begin
+
+    with ADS_Tmp do
+    try
+      Close;
+      CommandText:= ' SELECT type_no, type_name FROM plm_obj_type WHERE type_parent ='''+ FNodeName +''' ORDER BY type_no ';
+      Open;
+      First;
+      while not Eof do
+      begin
+        New(pFile_TreeNode);
+        pFile_TreeNode^.nodeValue:= FieldbyName('TYPE_NO').Asstring;
+        TreeNode := TreeView.Items.AddChildObject(node, FieldByName('TYPE_NAME').AsString, pFile_TreeNode);
+        TreeNode.ImageIndex := 2;
+        TreeNode.SelectedIndex := 3;
+        Next;
+      end;
+    finally
+    end;
+  end;
+
+begin
+  TreeView.Items.BeginUpdate;
+  //TreeView.Items.Clear;
+  if TargetNode<> nil then
+    TargetNode.DeleteChildren;
+
+  GetRecord(ADOQry_FILE_TYPE, 'SELECT type_no, type_name FROM plm_obj_type WHERE type_parent = ''file'' ORDER BY type_no');
+  while not ADOQry_FILE_TYPE.eof do
+  begin
+    New(pFile_TreeNode);
+    pFile_TreeNode^.nodeValue := ADOQry_FILE_TYPE.fieldbyname('TYPE_NO').asstring;
+    TreeNode1 := TreeView.Items.AddChildObject(TargetNode, ADOQry_FILE_TYPE.FieldByName('TYPE_NAME').AsString, pFile_TreeNode);
+    begin
+      TreeNode1.ImageIndex := 0;
+      TreeNode1.SelectedIndex := 0;
+    end;
+    CreateSubTree(ADOQry_FILE_TYPE.fieldbyname('TYPE_NO').asstring, TreeNode1);
+    ADOQry_FILE_TYPE.Next;
+  end;
+  TreeView.Items.EndUpdate;
+  //TreeView.Items[0].Selected := True;
+
+end;
+
+end.

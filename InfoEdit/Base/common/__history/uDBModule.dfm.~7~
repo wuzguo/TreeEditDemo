@@ -1,0 +1,41 @@
+object DBConn: TDBConn
+  OldCreateOrder = False
+  Height = 305
+  Width = 553
+  object DBConnect: TADOConnection
+    LoginPrompt = False
+    Provider = 'SQLOLEDB.1'
+    Left = 64
+    Top = 64
+  end
+  object FListQuery: TADOQuery
+    Connection = DBConnect
+    Parameters = <>
+    Left = 152
+    Top = 64
+  end
+  object FViewQuery: TADOQuery
+    Connection = DBConnect
+    Parameters = <>
+    Left = 216
+    Top = 64
+  end
+  object FDSView: TADODataSet
+    Connection = DBConnect
+    Parameters = <>
+    Left = 228
+    Top = 148
+  end
+  object Fqry: TADOQuery
+    Connection = DBConnect
+    Parameters = <>
+    Left = 128
+    Top = 168
+  end
+  object FLtqry: TADOQuery
+    Connection = DBConnect
+    Parameters = <>
+    Left = 204
+    Top = 204
+  end
+end

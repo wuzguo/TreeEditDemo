@@ -1,0 +1,37 @@
+object DataModuleHisConn: TDataModuleHisConn
+  Left = 565
+  Top = 327
+  ClientHeight = 271
+  ClientWidth = 545
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  OnCreate = DataModuleCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object HisConnection: TADOConnection
+    ConnectionString = 
+      'Provider=SQLOLEDB.1;Password=admin;Persist Security Info=True;Us' +
+      'er ID=sa;Initial Catalog=USDB;Data Source=127.0.0.1'
+    LoginPrompt = False
+    Provider = 'SQLOLEDB.1'
+    Left = 64
+    Top = 64
+  end
+  object QueryHis: TADOQuery
+    Connection = HisConnection
+    Parameters = <>
+    Left = 152
+    Top = 64
+  end
+  object QueryHisTmp: TADOQuery
+    Connection = HisConnection
+    Parameters = <>
+    Left = 216
+    Top = 64
+  end
+end

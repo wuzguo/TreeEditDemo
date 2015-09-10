@@ -1,0 +1,35 @@
+{========================================================
+   读取配置的单元, 封装配置文件类
+   @ zhiguo.wu
+   2014-06-12 21:00
+========================================================}
+
+unit uConfig;
+
+interface
+uses Classes, Windows, SysUtils, AES;
+
+type
+  TDBConfig = class(TObject)
+    FConfigName: string;
+    FStrConn: string;
+    FUserName: string;
+    FPassWord: string;
+    FDBName: string;
+    FServerIP: string;
+
+   private
+
+   public
+    property ConfigName: string read FConfigName write FConfigName;
+    property StrConn: string read FStrConn write FStrConn;
+    property UserName: string read FUserName write FUserName;
+    property PassWord: string read FPassWord write FPassWord;
+    property DBName: string read FDBName write FDBName;
+    property ServerIP: string read FServerIP write FServerIP;
+  end;
+ 
+
+implementation
+
+end.
